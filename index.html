@@ -4,7 +4,32 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>spendiq-insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>SpendIQ Insights</title>
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('spendiq_theme_v1');
+          var theme = (saved === 'dark' || saved === 'light') ? saved : 'light';
+          document.documentElement.classList.remove('light', 'dark');
+          document.documentElement.classList.add(theme);
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch(e) {}
+      })();
+    </script>
+    <!-- LIVE_SERVER_REDIRECT_START -->
+    <script>
+      // Automatically redirect to compiled production build when opened via VS Code Live Server or static server
+      if (window.location.protocol === 'file:' || (window.location.port !== '5173' && !window.__vite_plugin_react_preamble_installed__)) {
+        const currentPath = window.location.pathname;
+        const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+        window.location.replace(basePath + 'dist/index.html' + window.location.hash);
+      }
+    </script>
+    <!-- LIVE_SERVER_REDIRECT_END -->
   </head>
   <body>
     <div id="root"></div>

@@ -236,11 +236,17 @@ npm run build
 | `GET` | `/api/categories` | List system standard and custom categories | **Yes** |
 | `POST` | `/api/categories` | Create custom category | **Yes** |
 
+### AI Conversational Copilot (`/api/ai`)
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| `GET` | `/api/ai/status` | Check Gemini engine readiness and configuration | No |
+| `POST` | `/api/ai/chat` | Query personalized financial advisor with ledger context | **Yes** |
+
 ### Health Checks (`/api/health`)
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
-| `GET` | `/health` | Application status & version check | No |
-| `GET` | `/health/db` | Live PostgreSQL connectivity probe | No |
+| `GET` | `/api/health` | Application status & version check | No |
+| `GET` | `/api/health/db` | Live PostgreSQL connectivity probe | No |
 
 ---
 
@@ -257,10 +263,11 @@ npm run build
 
 ## 10. Financial Features & Intelligence Engine
 
+- **Google Gemini AI Copilot**: Native backend integration with `google-genai` (Gemini 2.5 Flash) synthesizing live user ledger transactions, budget limits, and savings targets into grounded, personalized financial advice.
+- **Resilient Fallback Engine**: If no Gemini API key is configured or during service outages, the system automatically falls back to an offline deterministic financial intelligence engine without disruptions.
 - **Cash Flow Analytics**: Calculates total income, expenses, and net savings from actual persisted user records.
 - **Rule-Based Surplus Calculation**: Computes safe-to-spend surplus by factoring income, expenses, committed budget limits, and safety buffers.
-- **Transparent Disclosures**: AI assistant and insight modules clearly state they are deterministic rule-based models without guaranteed financial returns.
-- **Empty States**: Clean empty state placeholders guide newly registered users without displaying phantom demo values.
+- **Transparent Disclosures**: AI assistant responses clearly state model disclaimers emphasizing that financial models provide decision-support and not guaranteed returns.
 - **Preset Date Windows**: Preset filters (`7D`, `1M`, `3M`, `6M`, `ALL`) compute dynamically from the current date.
 
 ---
@@ -269,4 +276,5 @@ npm run build
 
 - **HTTPS / Secure Cookies**: In local development (`ENVIRONMENT=development`), `COOKIE_SECURE` is set to `False` to permit testing on `http://localhost`. In production, `ENVIRONMENT=production` or `COOKIE_SECURE=True` must be set alongside HTTPS reverse-proxies.
 - **Database Scalability**: The current implementation connects synchronously via SQLAlchemy with connection pooling. For high-concurrency production deployments, an ASGI-native connection pooler (e.g. PgBouncer) is recommended.
-- **External AI Providers**: The system currently runs deterministic rule-based financial models. If integration with an external LLM (e.g. OpenAI or Anthropic) is desired in the future, it should be connected via a secure backend proxy without storing API keys on the client.
+- **Gemini API Key**: Set `GEMINI_API_KEY` in `backend/.env` to activate the Gemini 2.5 Flash model. If left unset, the application automatically uses the internal deterministic financial engine.
+
